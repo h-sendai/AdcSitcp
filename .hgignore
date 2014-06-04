@@ -1,0 +1,15 @@
+syntax: glob
+.depend
+*.o
+*.d
+*~
+*.bak
+.confFilePath
+omninames*
+rtc.conf
+core.*
+autogen
+AdcSitcpReader/AdcSitcpReaderComp
+AdcSitcpLogger/AdcSitcpLoggerComp
+AdcSitcpMonitor/AdcSitcpMonitorComp
+Dispatcher/DispatcherComp

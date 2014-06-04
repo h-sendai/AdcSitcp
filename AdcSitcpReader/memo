@@ -1,0 +1,47 @@
+header
+
+Constant:
+HEADER_LEN
+data_len = window_size*2*16 (16: n_chnannel)
+  (for example if window_size =10; data_len = 320 (0x140))
+max windows size = 128.
+max data_len = 128*2*16 = 4096
+
+read_len = HEADER_LEN + data_len (socket total read size, buffer size)
+max_read_len = 12 (header) + max_data_len = 4108
+
+<-- HEADER_BYTE_SIZE --><-- m_data_byte_size ------------------->
++----------------------+----------------------------------------+
+|  header              | data                                   |
++----------------------+----------------------------------------+
+<------------------ m_read_byte_size --------------------------->
+
+
+31             0
++---------------+
+|   | packetId  | (We can use packet id for user purpose)
++---------------+
+| DataLength    | (Data length (does not include this header)
++---------------+
+| Trigger       |
++---------------+
+|       |       | Data Ch # 0, Data Ch # 1
++---------------+
+|       |       |
++---------------+
+|       |       |
++---------------+
+|       |       |
++---------------+
+|       |       | Data Ch # 14, Data Ch # 15
++---------------+
+|       |       | Data Ch # 0, Data Ch # 1
++---------------+
+|       |       |
++---------------+
+|       |       |
++---------------+
+|       |       |
++---------------+
+|       |       | Data Ch # 14, Data Ch # 15
++---------------+

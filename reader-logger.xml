@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<configInfo>
+    <daqOperator>
+        <hostAddr>127.0.0.1</hostAddr>
+    </daqOperator>
+    <daqGroups>
+        <daqGroup gid="group0">
+            <components>
+                <component cid="AdcSitcpReader0">
+                    <hostAddr>127.0.0.1</hostAddr>
+                    <hostPort>50000</hostPort>
+                    <instName>AdcSitcpReader0.rtc</instName>
+                    <execPath>/home/sendai/AdcSitcp/AdcSitcpReader/AdcSitcpReaderComp</execPath>
+                    <confFile>/tmp/daqmw/rtc.conf</confFile>
+                    <startOrd>2</startOrd>
+                    <inPorts>
+                    </inPorts>
+                    <outPorts>
+                        <outPort>adcsitcpreader_out</outPort>
+                    </outPorts>
+                    <params>
+                        <param pid="srcAddr">192.168.10.16</param>
+                        <param pid="srcPort">24</param>
+                        <param pid="windowSize">10</param>
+                        <param pid="delay">10</param>
+                        <param pid="setRegisters">no</param>
+                        <!--
+                        <param pid="srcAddr">192.168.10.17</param>
+                        <param pid="srcPort">24</param>
+                        <param pid="windowSize">10</param>
+                        <param pid="delay">10</param>
+                        <param pid="setRegisters">yes</param>
+                        -->
+                    </params>
+                </component>
+                <component cid="AdcSitcpLogger0">
+                    <hostAddr>127.0.0.1</hostAddr>
+                    <hostPort>50000</hostPort>
+                    <instName>AdcSitcpLogger0.rtc</instName>
+                    <execPath>/home/sendai/AdcSitcp/AdcSitcpLogger/AdcSitcpLoggerComp</execPath>
+                    <confFile>/tmp/daqmw/rtc.conf</confFile>
+                    <startOrd>1</startOrd>
+                    <inPorts>
+                        <inPort from="AdcSitcpReader0:adcsitcpreader_out">adcsitcplogger_in</inPort>
+                    </inPorts>
+                    <outPorts>
+                    </outPorts>
+                    <params>
+                        <param pid="dirName">/tmp</param>
+                        <param pid="isLogging">yes</param>
+                        <param pid="maxFileSizeInMegaByte">1024</param>
+                        <!--
+                        <param pid="monitorUpdateRate">20</param>
+                        -->
+                    </params>
+                </component>
+            </components>
+        </daqGroup>
+    </daqGroups>
+</configInfo>
