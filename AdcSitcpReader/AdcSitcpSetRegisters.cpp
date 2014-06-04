@@ -48,10 +48,10 @@ int get_board_version(std::string ip_address)
 
 int AdcSitcpReader::set_adc_registers(std::string ip_address)
 {
-    // int board_version = get_board_version(ip_address);
-    // if (board_version < 0) {
-    //    return -1;
-    // }
+    int board_version = get_board_version(ip_address);
+    if (board_version < 0) {
+       return -1;
+    }
 
     // reset ADC (soft reset)
     write_register_one_byte(ip_address, 0x10,  0x0);
@@ -72,14 +72,14 @@ int AdcSitcpReader::set_adc_registers(std::string ip_address)
     write_register_one_byte(ip_address, 0x10,  0x1);
     write_register_one_byte(ip_address, 0x108, 0x0);
     
-    // if (board_version == 1) {
-    //    write_register_one_byte(ip_address, 0x10,  0x0);
-    //    write_register_one_byte(ip_address, 0x121, 0x3);
-    //    write_register_one_byte(ip_address, 0x1ff, 0x1);
-    //    write_register_one_byte(ip_address, 0x10,  0x1);
-    //    write_register_one_byte(ip_address, 0x121, 0x3);
-    //    write_register_one_byte(ip_address, 0x1ff, 0x1);
-    // }
+    if (board_version == 1) {
+       write_register_one_byte(ip_address, 0x10,  0x0);
+       write_register_one_byte(ip_address, 0x121, 0x3);
+       write_register_one_byte(ip_address, 0x1ff, 0x1);
+       write_register_one_byte(ip_address, 0x10,  0x1);
+       write_register_one_byte(ip_address, 0x121, 0x3);
+       write_register_one_byte(ip_address, 0x1ff, 0x1);
+    }
 
     // Ouput format: offset binary
     write_register_one_byte(ip_address, 0x10,  0x0);
