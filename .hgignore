@@ -15,3 +15,4 @@ AdcSitcpMonitor/AdcSitcpMonitorComp
 Dispatcher/DispatcherComp
 bs/decode/decode-16ch
 bs/decode2/decode
+bs/decode-cpp/main
