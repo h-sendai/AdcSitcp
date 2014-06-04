@@ -42,17 +42,15 @@ class AdcSitcpPacket
 public:
     AdcSitcpPacket();
     virtual ~AdcSitcpPacket();
-    int set_buf(const unsigned char *buf, int buf_len);
-    bool is_adc_sitcp_data_packet() const;
-	//int  get_word_size();
-    int  get_num_of_ch();
-    int  get_data_length()   const;
-	int  get_window_size()   const;
-    int  get_trigger_count() const;
-    int  get_buf_pos();
-    int  get_buf_len();
+
+    int          set_buf(const unsigned char *buf, const int buf_len);
+	int          reset_buf();
+    bool         is_adc_sitcp_data_packet()      const;
+    int          get_data_length()               const;
+	int          get_window_size()               const;
+    int          get_trigger_count()             const;
 	unsigned int get_data_at(int ch, int window) const;
-	int  reset_buf();
+
 	const static int HEADER_SIZE = 12;
     const static int N_CH        = 16;
     const static int TYPE_POS    = 0;
