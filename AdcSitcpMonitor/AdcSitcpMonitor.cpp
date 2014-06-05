@@ -229,27 +229,6 @@ int AdcSitcpMonitor::reset_InPort()
 
 int AdcSitcpMonitor::fill_data(const unsigned char* mydata, const int size)
 {
-    // check the header and the trailer
-#if 0
-    adc_sitcp_header header;
-    adc_sitcp_trailer trailer;
-
-    decode_header(&header, mydata);
-    decode_trailer(&trailer, mydata);
-
-    if (is_valid_header_trailer(&header, &trailer) < 0) {
-        fatal_error_report(USER_DEFINED_ERROR1, "HEADER/TRAILER ERROR");
-    }
-
-    // Then fill the data to the histograms
-    for (int ch = 0; ch < N_CH; ch ++) {
-        for (int tick = 0; tick < N_TICKS; tick ++) {
-            int data = get_data_at(mydata, ch, tick);
-            m_hist[ch]->Fill(tick, data); // weight fill()
-        }
-    }
-#endif
-    
     m_asp.set_buf(mydata, size);
     if (! m_asp.is_adc_sitcp_data_packet()) {
         fatal_error_report(USER_DEFINED_ERROR1, "NOT A ADC_SITCP DATA TYPE");
