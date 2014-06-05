@@ -118,6 +118,13 @@ int AdcSitcpMonitor::parse_params(::NVList* list)
             char *offset;
             m_monitor_update_rate = (int)strtol(svalue.c_str(), &offset, 10);
         }
+        if (sname == "drawHistogramChannel") {
+            if (m_debug) {
+                std::cerr << "drawHistogramChannel" << svalue << std::endl;
+            }
+            int ch = strtol(svalue.c_str(), NULL, 0);
+            m_draw_ch_list.push_back(ch);
+        }
         // If you have more param in config.xml, write here
     }
 
@@ -153,8 +160,52 @@ int AdcSitcpMonitor::daq_start()
         delete m_canvas;
         m_canvas = 0;
     }
-    m_canvas = new TCanvas("c1", "histos", 0, 0, 800, 400);
-    m_canvas->Divide(2, 1);
+
+    int canvas_x  = 0;
+    int canvas_y  = 0;
+    int div_x     = 0;
+    int div_y     = 0;
+    int n_draw_ch = m_draw_ch_list.size();
+
+    if (n_draw_ch < 2) {
+        canvas_x = 400;
+        canvas_y = 400;
+        div_x = 1;
+        div_y = 1;
+    }
+    else if (n_draw_ch == 2) {
+        canvas_x = 800;
+        canvas_y = 400;
+        div_x = 2;
+        div_y = 1;
+    }
+    else if (n_draw_ch <= 4) {
+        canvas_x = 800;
+        canvas_y = 800;
+        div_x = 2;
+        div_y = 2;
+    }
+    else if (n_draw_ch <= 8) {
+        canvas_x = 800;
+        canvas_y = 400;
+        div_x = 4;
+        div_y = 2;
+    }
+    else if (n_draw_ch == 9) {
+        canvas_x = 800;
+        canvas_y = 800;
+        div_x = 3;
+        div_y = 3;
+    }
+    else {
+        canvas_x = 800;
+        canvas_y = 800;
+        div_x = 4;
+        div_y = 4;
+    }
+    m_canvas = new TCanvas("c1", "histos", 0, 0, canvas_x, canvas_y);
+    m_canvas->Divide(div_x, div_y);
+
     m_canvas->Update();
 
     ////////////////       HISTOS      ///////////////////
@@ -192,9 +243,11 @@ int AdcSitcpMonitor::daq_stop()
 {
     std::cerr << "*** AdcSitcpMonitor::stop" << std::endl;
 
-    for (int ch = 0; ch < 2; ch ++) {
-        m_canvas->cd(ch + 1);
-        m_hist[ch]->Draw();
+    int draw_pos = 1;
+    for (unsigned int i = 0; i < m_draw_ch_list.size(); i++) {
+        m_canvas->cd(draw_pos);
+        m_hist[m_draw_ch_list[i]]->Draw();
+        draw_pos ++;
     }
     m_canvas->Update();
 
@@ -305,9 +358,11 @@ int AdcSitcpMonitor::daq_run()
     // Draw histogram periodically
     unsigned long sequence_num = get_sequence_num();
     if ((sequence_num % m_monitor_update_rate) == 0) {
-        for (int ch = 0; ch < 2; ch ++) {
-            m_canvas->cd(ch + 1);
-            m_hist[ch]->Draw();
+        int draw_pos = 1;
+        for (unsigned int i = 0; i < m_draw_ch_list.size(); i++) {
+            m_canvas->cd(draw_pos);
+            m_hist[m_draw_ch_list[i]]->Draw();
+            draw_pos ++;
         }
         m_canvas->Update();
     }

@@ -73,7 +73,25 @@
                     </inPorts>
                     <outPorts/>
                     <params>
-                        <param pid="monitorUpdateRate">10</param>
+                        <param pid="monitorUpdateRate">20</param>
+                        <param pid="drawHistogramChannel">0</param>
+                        <param pid="drawHistogramChannel">1</param>
+                        <param pid="drawHistogramChannel">2</param>
+                        <param pid="drawHistogramChannel">3</param>
+                        <!--
+                        <param pid="drawHistogramChannel">4</param>
+                        <param pid="drawHistogramChannel">5</param>
+                        <param pid="drawHistogramChannel">6</param>
+                        <param pid="drawHistogramChannel">7</param>
+                        <param pid="drawHistogramChannel">8</param>
+                        <param pid="drawHistogramChannel">9</param>
+                        <param pid="drawHistogramChannel">10</param>
+                        <param pid="drawHistogramChannel">11</param>
+                        <param pid="drawHistogramChannel">12</param>
+                        <param pid="drawHistogramChannel">13</param>
+                        <param pid="drawHistogramChannel">14</param>
+                        <param pid="drawHistogramChannel">15</param>
+                        -->
                     </params>
                 </component>
             </components>
