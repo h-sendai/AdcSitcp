@@ -1,7 +1,7 @@
 SUBDIRS += AdcSitcpReader
 SUBDIRS += Dispatcher
 SUBDIRS += AdcSitcpLogger
-#SUBDIRS += AdcSitcpMonitor
+SUBDIRS += AdcSitcpMonitor
 
 .PHONY: $(SUBDIRS)
 

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!-- DON'T REMOVE THE ABOVE LINE.                                     -->
+<!-- DON'T PUT ANY LINES ABOVE THE 1ST LINE.                          -->
+<!-- Sample config.xml to run AdcSitcpReader and AdcSitcpMonitor.         -->
+<!-- Please rewrite execPath (2 places), confFile (2 places) suitable -->
+<!-- for your directory structure.                                    -->
+<!-- run.py will create rtc.conf in /tmp/daqmw/rtc.conf               -->
+<!-- If you use run.py, set confFile as /tmp/daqmw/rtc.conf           -->
+<configInfo>
+    <daqOperator>
+        <hostAddr>127.0.0.1</hostAddr>
+    </daqOperator>
+    <daqGroups>
+        <daqGroup gid="group0">
+            <components>
+                <component cid="AdcSitcpReader0">
+                    <hostAddr>127.0.0.1</hostAddr>
+                    <hostPort>50000</hostPort>
+                    <instName>AdcSitcpReader0.rtc</instName>
+                    <execPath>/home/sendai/AdcSitcp/AdcSitcpReader/AdcSitcpReaderComp</execPath>
+                    <confFile>/tmp/daqmw/rtc.conf</confFile>
+                    <startOrd>2</startOrd>
+                    <inPorts>
+                    </inPorts>
+                    <outPorts>
+                        <outPort>adcsitcpreader_out</outPort>
+                    </outPorts>
+                    <params>
+                        <param pid="srcAddr">192.168.10.16</param>
+                        <param pid="srcPort">24</param>
+                        <param pid="windowSize">10</param>
+                        <param pid="delay">10</param>
+                        <param pid="setRegisters">no</param>
+                        <!--
+                        <param pid="srcAddr">192.168.10.17</param>
+                        <param pid="srcPort">24</param>
+                        <param pid="windowSize">10</param>
+                        <param pid="delay">10</param>
+                        <param pid="setRegisters">yes</param>
+                        -->
+                    </params>
+                </component>
+                <component cid="AdcSitcpMonitor0">
+                    <hostAddr>127.0.0.1</hostAddr>
+                    <hostPort>50000</hostPort>
+                    <instName>AdcSitcpMonitor0.rtc</instName>
+                    <execPath>/home/sendai/AdcSitcp/AdcSitcpMonitor/AdcSitcpMonitorComp</execPath>
+                    <confFile>/tmp/daqmw/rtc.conf</confFile>
+                    <startOrd>1</startOrd>
+                    <inPorts>
+                        <inPort from="AdcSitcpReader0:adcsitcpreader_out">adcsitcpmonitor_in</inPort>
+                    </inPorts>
+                    <outPorts>
+                    </outPorts>
+                    <params>
+                        <param pid="monitorUpdateRate">80</param>
+                    </params>
+                </component>
+            </components>
+        </daqGroup>
+    </daqGroups>
+</configInfo>
