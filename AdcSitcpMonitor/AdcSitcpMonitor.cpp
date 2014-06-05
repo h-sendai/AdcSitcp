@@ -250,22 +250,22 @@ int AdcSitcpMonitor::fill_data(const unsigned char* mydata, const int size)
     }
 #endif
     
-    asp.set_buf(mydata, size);
-    if (! asp.is_adc_sitcp_data_packet()) {
+    m_asp.set_buf(mydata, size);
+    if (! m_asp.is_adc_sitcp_data_packet()) {
         fatal_error_report(USER_DEFINED_ERROR1, "NOT A ADC_SITCP DATA TYPE");
     }
 
-    // int trigger_count = asp.get_trigger_count(); // Not used in this application
-    int window_size   = asp.get_window_size();
+    // int trigger_count = m_asp.get_trigger_count(); // Not used in this application
+    int window_size   = m_asp.get_window_size();
 
     for (int ch = 0; ch < AdcSitcpPacket::N_CH; ch++) {
         for (int w = 0; w < window_size; w++) {
-            int data = asp.get_data_at(ch, w);
+            int data = m_asp.get_data_at(ch, w);
             m_hist[ch]->Fill(data);
         }
     }
 
-    asp.reset_buf();
+    m_asp.reset_buf();
 
     return 0;
 }

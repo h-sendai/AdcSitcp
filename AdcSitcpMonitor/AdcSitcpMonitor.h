@@ -72,7 +72,7 @@ private:
     double   m_min;
     double   m_max;
     
-    AdcSitcpPacket asp;
+    AdcSitcpPacket m_asp;
 
     ////////// DAQ-Middleware Data Path //////////
     const static int MAX_BUFFER_SIZE = 1024*1024;
