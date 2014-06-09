@@ -43,6 +43,7 @@ AdcSitcpMonitor::AdcSitcpMonitor(RTC::Manager* manager)
       m_max(4096.0),
       m_event_byte_size(0),
       m_monitor_update_rate(30),
+      m_use_adc_sum(false),
       m_debug(false)
 {
     // Registration: InPort/OutPort/Service
@@ -124,6 +125,15 @@ int AdcSitcpMonitor::parse_params(::NVList* list)
             }
             int ch = strtol(svalue.c_str(), NULL, 0);
             m_draw_ch_list.push_back(ch);
+        }
+        if (sname == "useAdcSum") {
+            if (svalue == "yes" || svalue == "Yes" || svalue == "YES") {
+                m_use_adc_sum = true;
+                std::cerr << "m_use_adc_sum: true" << std::endl;
+
+                m_bin = m_bin*8; // Monitor Component does not know window size until
+                m_max = m_max*8; // read the 1st data.  8 is window size in this experiment.
+            }
         }
         // If you have more param in config.xml, write here
     }
@@ -290,10 +300,22 @@ int AdcSitcpMonitor::fill_data(const unsigned char* mydata, const int size)
     // int trigger_count = m_asp.get_trigger_count(); // Not used in this application
     int window_size   = m_asp.get_window_size();
 
-    for (int ch = 0; ch < AdcSitcpPacket::N_CH; ch++) {
-        for (int w = 0; w < window_size; w++) {
-            int data = m_asp.get_data_at(ch, w);
+    if (m_use_adc_sum) { // Sum all adc value at each window
+        for (int ch = 0; ch < AdcSitcpPacket::N_CH; ch ++) {
+            int data = 0;
+            for (int w = 0; w < window_size; w++) {
+                int tmp_data = m_asp.get_data_at(ch, w);
+                data += tmp_data;
+            }
             m_hist[ch]->Fill(data);
+        }
+    }
+    else {
+        for (int ch = 0; ch < AdcSitcpPacket::N_CH; ch++) {
+            for (int w = 0; w < window_size; w++) {
+                int data = m_asp.get_data_at(ch, w);
+                m_hist[ch]->Fill(data);
+            }
         }
     }
 

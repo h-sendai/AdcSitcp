@@ -80,6 +80,7 @@ private:
     unsigned char m_recv_data[MAX_BUFFER_SIZE];
     unsigned int  m_event_byte_size;
     int      m_monitor_update_rate;
+    bool     m_use_adc_sum;
 
     bool m_debug;
 };

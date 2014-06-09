@@ -54,6 +54,7 @@
                     </outPorts>
                     <params>
                         <param pid="monitorUpdateRate">20</param>
+                        <param pid="useAdcSum">yes</param>
                         <param pid="drawHistogramChannel">0</param>
                         <param pid="drawHistogramChannel">1</param>
                         <param pid="drawHistogramChannel">2</param>
