@@ -20,9 +20,16 @@
                     <params>
                         <param pid="srcAddr">192.168.10.16</param>
                         <param pid="srcPort">24</param>
-                        <param pid="need_power_reset">no</param>
-                        <param pid="use_old_data_format">yes</param>
-                        <param pid="set_data_rate">yes</param>
+                        <param pid="windowSize">10</param>
+                        <param pid="delay">10</param>
+                        <param pid="setRegisters">no</param>
+                        <!--
+                        <param pid="srcAddr">192.168.10.17</param>
+                        <param pid="srcPort">24</param>
+                        <param pid="windowSize">10</param>
+                        <param pid="delay">10</param>
+                        <param pid="setRegisters">yes</param>
+                        -->
                     </params>
                 </component>
 
